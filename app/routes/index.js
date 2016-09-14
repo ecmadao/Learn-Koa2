@@ -10,9 +10,7 @@ fs
   )
   .forEach(file => {
     console.log(file);
-    // import route from `${path.join(__dirname, file)}`;
     const route = require(path.join(__dirname, file));
-    // console.log(path.join(__dirname, file));
     router.use(route.routes(), route.allowedMethods());
   });
 

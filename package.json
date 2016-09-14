@@ -18,11 +18,15 @@
     "babel-register": "^6.14.0",
     "koa": "^2.0.0-alpha.7",
     "koa-router": "^7.0.1",
-    "nodemon": "^1.10.2"
+    "koa-views": "^5.1.2",
+    "nodemon": "^1.10.2",
+    "nunjucks": "^2.5.2"
   },
   "devDependencies": {
     "babel-polyfill": "^6.13.0",
     "babel-preset-es2015": "^6.14.0",
-    "babel-preset-stage-0": "^6.5.0"
+    "babel-preset-stage-0": "^6.5.0",
+    "exports-loader": "^0.6.3",
+    "nunjucks-loader": "^2.4.3"
   }
 }
