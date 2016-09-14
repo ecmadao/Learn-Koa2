@@ -10,6 +10,7 @@ router.get('/', (ctx, next) => {
 router.get('/about', (ctx, next) => {
   ctx.body = 'about page';
 });
+
 // router.get('/', home.index);
 // router.get('direct', home.direct);
 

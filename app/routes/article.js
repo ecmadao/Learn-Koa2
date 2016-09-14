@@ -1,13 +1,19 @@
 import koaRouter from 'koa-router';
 
 const router = koaRouter({
-  prefix: '/article'
+  prefix: '/articles'
 });
 router.get('/', (ctx, next) => {
-  ctx.body = 'article page';
+  ctx.body = 'articles page';
 });
-router.get('/about', (ctx, next) => {
-  ctx.body = 'article about page';
+router.get('/author', (ctx, next) => {
+  ctx.body = 'article author page';
+});
+router.get('/:id/author', (ctx, next) => {
+  ctx.body = 'article author page';
+});
+router.get('/:id/info', (ctx, next) => {
+  ctx.body = 'article info page';
 });
 
 module.exports = router;
