@@ -1,6 +1,8 @@
 const home = async (ctx, next) => {
+  console.log('request body');
+  console.log(ctx.request.body);
   ctx.cookies.set('username', 'ecmadao');
-  await ctx.render('home/index', {
+  await ctx.render('home/indexx', {
     title: 'home page',
     content: 'this is home page'
   });
