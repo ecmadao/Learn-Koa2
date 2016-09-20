@@ -3,6 +3,9 @@ import User from '../services/user';
 const home = async (ctx, next) => {
   console.log('request body');
   console.log(ctx.request.body);
+  let n = ctx.session.num || 0;
+  console.log(n);
+  ctx.session.num = n + 1;
   ctx.cookies.set('username', 'ecmadao');
   // const user = User.addUser('ecmadao', 'wlec@outlook.com', '12345678');
   // console.log(user);

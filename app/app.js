@@ -4,10 +4,16 @@ import convert from 'koa-convert';
 import bodyParser from 'koa-bodyparser';
 import onerror from 'koa-onerror';
 import views from 'koa-views';
+import csrf from 'koa-csrf';
+// import session from 'koa-session';
+import session from 'koa-generic-session';
+import MongoStore from 'koa-generic-session-mongo';
 import router from './routes/index';
 import nunjucks from 'nunjucks';
 
 const app = new Koa();
+app.keys = ['keys'];
+
 onerror(app);
 // 配置nunjucks模板文件所在的路径，否则模板继承时无法使用相对路径
 nunjucks.configure(__dirname + '/templates', { autoescape: true });
@@ -16,6 +22,13 @@ nunjucks.configure(__dirname + '/templates', { autoescape: true });
 app.use(bodyParser());
 // logger
 app.use(convert(logger()));
+// csrf
+app.use(convert(new csrf()));
+// session
+app.use(convert(session({
+  store: new MongoStore()
+})));
+// app.use(convert(session(app)));
 //views with nunjucks
 app.use(views(__dirname + '/templates', {
   map: {
