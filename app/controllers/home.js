@@ -1,4 +1,9 @@
 import User from '../services/user';
+// import request from 'request';
+import {
+  getGithubToke,
+  getGithubUser
+} from '../services/github';
 
 const home = async (ctx, next) => {
   console.log('request body');
@@ -16,9 +21,6 @@ const home = async (ctx, next) => {
 };
 
 const about = async (ctx, next) => {
-  const request = ctx.request;
-  console.log('request query');
-  console.log(request.query);
   console.log('ctx cookies');
   console.log(ctx.cookies.get('username'));
   await ctx.render('home/about', {
@@ -27,7 +29,21 @@ const about = async (ctx, next) => {
   });
 };
 
+const github = async (ctx, next) => {
+  const code = ctx.request.query.code;
+  const result = await getGithubToke(code);
+  try {
+    const token = result.match(/^access_token=(\w+)&/)[1];
+    console.log(token);
+    ctx.session.token = token;
+    ctx.body = 'github login callback';
+  } catch (TypeError) {
+    ctx.redirect('/');
+  }
+};
+
 export default {
   home,
-  about
+  about,
+  github
 };

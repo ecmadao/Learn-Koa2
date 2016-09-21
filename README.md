@@ -10,9 +10,10 @@
 2. [router](https://github.com/ecmadao/Coding-Guide/blob/master/Notes/NodeJS/KOA/learn%20koa2--router.md)
 3. [controller & template](https://github.com/ecmadao/Coding-Guide/blob/master/Notes/NodeJS/KOA/learn%20koa2--controller%20%26%20template.md)
 4. [context](https://github.com/ecmadao/Coding-Guide/blob/master/Notes/NodeJS/KOA/learn%20koa2--context.md)
-5. model
-6. work with frontend
-7. [tools](https://github.com/ecmadao/Coding-Guide/blob/master/Notes/NodeJS/KOA/learn%20koa2--tools.md)
+5. [model & mongodb](https://github.com/ecmadao/Coding-Guide/blob/master/Notes/NodeJS/KOA/learn%20koa2--model%20%26%20mongodb.md)
+6. [认证](https://github.com/ecmadao/Coding-Guide/blob/master/Notes/NodeJS/KOA/learn%20koa2--%E8%AE%A4%E8%AF%81.md)
+7. work with frontend
+8. [tools](https://github.com/ecmadao/Coding-Guide/blob/master/Notes/NodeJS/KOA/learn%20koa2--tools.md)
 
 ## Gitbook
 

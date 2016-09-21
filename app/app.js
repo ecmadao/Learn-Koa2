@@ -5,7 +5,7 @@ import bodyParser from 'koa-bodyparser';
 import onerror from 'koa-onerror';
 import views from 'koa-views';
 import csrf from 'koa-csrf';
-// import session from 'koa-session';
+import flash from 'koa-flash';
 import session from 'koa-generic-session';
 import MongoStore from 'koa-generic-session-mongo';
 import router from './routes/index';
@@ -28,7 +28,9 @@ app.use(convert(new csrf()));
 app.use(convert(session({
   store: new MongoStore()
 })));
-// app.use(convert(session(app)));
+// flash
+app.use(convert(flash()));
+
 //views with nunjucks
 app.use(views(__dirname + '/templates', {
   map: {
