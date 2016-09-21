@@ -10,9 +10,10 @@ import session from 'koa-generic-session';
 import MongoStore from 'koa-generic-session-mongo';
 import router from './routes/index';
 import nunjucks from 'nunjucks';
+import {appKey} from 'config-lite';
 
 const app = new Koa();
-app.keys = ['services'];
+app.keys = [appKey];
 
 onerror(app);
 // 配置nunjucks模板文件所在的路径，否则模板继承时无法使用相对路径
