@@ -4,8 +4,7 @@ import home from '../controllers/home';
 const router = koaRouter({
   prefix: '/'
 });
-router.get('/', home.home);
+router.get('/', home.homeIndex);
 router.get('about', home.about);
-router.get('github/login', home.github);
 
 module.exports = router;

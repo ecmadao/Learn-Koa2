@@ -1,18 +1,19 @@
 import koaRouter from 'koa-router';
 import todo from '../controllers/todo';
+import {checkIfLogin} from '../middlewares/utils';
 
 const router = koaRouter({
   prefix: '/todo'
 });
-// router.get('/', todo.home);
-router.get('/', (ctx, next) => {
-  ctx.body = 'todos page';
-});
-router.get('/new', todo.addNew);
-router.get('/complete', todo.complete);
-router.get('/delay', todo.delay);
-router.get('/:id', todo.detailTodo);
-router.put('/:id', todo.updateTodo);
-router.delete('/:id', todo.deleteTodo);
+router.get('/', checkIfLogin, todo.home);
+// router.get('/', (ctx, next) => {
+//   ctx.body = 'todos page';
+// });
+router.post('/new', checkIfLogin, todo.addNew);
+router.get('/complete', checkIfLogin, todo.complete);
+router.get('/delay', checkIfLogin, todo.delay);
+router.get('/:id', checkIfLogin, todo.detailTodo);
+router.put('/:id', checkIfLogin, todo.updateTodo);
+router.delete('/:id', checkIfLogin, todo.deleteTodo);
 
 module.exports = router;

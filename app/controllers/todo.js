@@ -2,9 +2,6 @@ import Todo from '../services/todo';
 
 const home = async (ctx, next) => {
   const user = ctx.session.user;
-  if (!user) {
-    return ctx.redirect('/');
-  }
   const todos = Todo.getTodos(user.name);
   await ctx.render('todo/index', {
     todos,
@@ -14,12 +11,11 @@ const home = async (ctx, next) => {
   });
 };
 
-const addNew = (ctx, next) => {
-  console.log(ctx.request);
-  console.log('request body');
-  console.log(ctx.request.body);
+const addNew = async (ctx, next) => {
+  const requestData = ctx.request.body;
+  const user = ctx.session.user.name;
   ctx.body = 111;
-}
+};
 
 const complete = async (ctx, next) => {
 
