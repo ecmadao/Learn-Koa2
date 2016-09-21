@@ -1,0 +1,18 @@
+{% extends "layouts/base.html" %}
+
+{% block body %}
+  <h1>{{ content }}</h1>
+  <ul>
+    {% for todo in todos %}
+      <li data-id="{{ todo._id }}">
+        {{ todo.content }}
+      </li>
+    {% endfor %}
+  </ul>
+  <form action="/todo/new" method="post">
+    <input type="hidden" name="_csrf" value="{{ csrf }}" />
+    <input type="hidden" name="utf8" value="✓" />
+    <input type="text" name="content"/>
+    <input type="submit" value="submit"/>
+  </form>
+{% endblock %}
