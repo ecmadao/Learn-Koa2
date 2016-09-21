@@ -2,5 +2,12 @@
 
 {% block body %}
   <h1>{{ content }}</h1>
-  <a href="https://github.com/login/oauth/authorize?scope=user:email&client_id=1b1d94a101d42c0f6dee">login with github</a>
+  {% if user %}
+    <span>welcome, {{ user }}</span>
+    <br/>
+    <br/>
+    <a>logout</a>
+  {% else %}
+    <a href="https://github.com/login/oauth/authorize?scope=user:email&client_id=1b1d94a101d42c0f6dee">login with github</a>
+  {% endif %}
 {% endblock %}

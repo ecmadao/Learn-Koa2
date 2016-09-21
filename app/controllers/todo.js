@@ -14,10 +14,11 @@ const home = async (ctx, next) => {
   });
 };
 
-const addNew = async (ctx, next) => {
+const addNew = (ctx, next) => {
   console.log(ctx.request);
   console.log('request body');
   console.log(ctx.request.body);
+  ctx.body = 111;
 }
 
 const complete = async (ctx, next) => {
@@ -28,7 +29,15 @@ const delay = async (ctx, next) => {
 
 };
 
-const operation = async (ctx, next) => {
+const detailTodo = async (ctx, next) => {
+
+};
+
+const updateTodo = async (ctx, next) => {
+
+};
+
+const deleteTodo = async (ctx, next) => {
 
 };
 
@@ -37,5 +46,7 @@ export default {
   delay,
   addNew,
   complete,
-  operation
+  detailTodo,
+  updateTodo,
+  deleteTodo
 };

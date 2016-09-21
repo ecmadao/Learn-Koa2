@@ -29,7 +29,6 @@ app.use(convert(session({
 app.use(new csrf());
 // flash
 app.use(convert(flash()));
-
 //views with nunjucks
 app.use(views(__dirname + '/templates', {
   map: {

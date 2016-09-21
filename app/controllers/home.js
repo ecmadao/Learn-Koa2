@@ -4,18 +4,15 @@ import {
 } from '../services/github';
 
 const home = async (ctx, next) => {
-  // ctx.cookies.set('username', 'ecmadao');
   // const user = User.addUser('ecmadao', 'wlec@outlook.com', '12345678');
-  // console.log(user);
   await ctx.render('home/index', {
     title: 'home page',
-    content: 'this is home page'
+    content: 'this is home page',
+    user: (ctx.session.user && ctx.session.user.name) || null
   });
 };
 
 const about = async (ctx, next) => {
-  // console.log('ctx cookies');
-  // console.log(ctx.cookies.get('username'));
   await ctx.render('home/about', {
     title: 'about page',
     content: 'this is about page'
@@ -30,7 +27,7 @@ const github = async (ctx, next) => {
     ctx.session.token = token;
     const userInfo = await getGithubUser(token);
     if (userInfo) {
-      ctx.session.user = userInfo;
+      ctx.session.user = JSON.parse(userInfo);
       return ctx.redirect('/todo');
     }
     return ctx.redirect('/');
