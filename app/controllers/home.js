@@ -1,12 +1,9 @@
-import User from '../services/user';
 import {
   getGithubToke,
   getGithubUser
 } from '../services/github';
 
 const home = async (ctx, next) => {
-  console.log('request body');
-  console.log(ctx.request.body);
   // ctx.cookies.set('username', 'ecmadao');
   // const user = User.addUser('ecmadao', 'wlec@outlook.com', '12345678');
   // console.log(user);

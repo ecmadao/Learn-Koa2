@@ -8,14 +8,10 @@ mongoose.connect(config.url, function (err) {
   }
 });
 
-import User from './user';
+// import User from './user';
 import Todo from './todo';
 
 export default {
-  User,
+  // User,
   Todo
 }
-
-// exports.User = require('./user');
-// exports.Topic = require('./topic');
-// exports.Comment = require('./comment');
