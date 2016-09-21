@@ -1,6 +1,6 @@
 import path from 'path';
 
-export default {
+module.exports = {
   port: process.env.PORT || 7000,
   mongodb: {
     url: 'mongodb://127.0.0.1:27017/koa2-todo'

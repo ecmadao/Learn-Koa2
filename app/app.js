@@ -8,9 +8,9 @@ import csrf from 'koa-csrf';
 import flash from 'koa-flash';
 import session from 'koa-generic-session';
 import MongoStore from 'koa-generic-session-mongo';
-import router from './routes/index';
 import nunjucks from 'nunjucks';
 import {appKey} from 'config-lite';
+import router from './routes/index';
 
 const app = new Koa();
 app.keys = [appKey];
