@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const TodoSchema = new Schema({
   content: { type: String, required: true },
+  complete: { type: Boolean, required: true, default: false },
   created_at: { type: Date, default: Date.now },
   updated_at: { type: Date, default: Date.now },
   tags: [{ type: String, required: true}],
