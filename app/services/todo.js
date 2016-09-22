@@ -20,7 +20,7 @@ const addTodo = (options) => {
 };
 
 const deleteTodo = (todoId) => {
-
+  
 };
 
 const completeTodo = (todoId) => {

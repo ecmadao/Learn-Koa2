@@ -1,6 +1,6 @@
 import Todo from '../services/todo';
 
-const home = async (ctx, next) => {
+const todoIndex = async (ctx, next) => {
   const user = ctx.session.user;
   const todos = await Todo.getTodos(user.name);
   await ctx.render('todo/index', {
@@ -44,7 +44,7 @@ const deleteTodo = async (ctx, next) => {
 };
 
 export default {
-  home,
+  todoIndex,
   delay,
   addNew,
   complete,

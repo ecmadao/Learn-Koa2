@@ -11,7 +11,12 @@
   <ul>
     {% for todo in todos %}
       <li data-id="{{ todo._id }}">
-        {{ todo.content }}
+        <input type="checkbox" defaultChecked="{{ todo.complete }}"/>
+        <span class="todo_content">
+          {{ todo.content }}
+        </span>
+        &nbsp;&nbsp;
+        <span>X</span>
       </li>
     {% endfor %}
   </ul>

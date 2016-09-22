@@ -1,16 +1,14 @@
 const homeIndex = async (ctx, next) => {
-  ctx.redirect('/user');
-  // await ctx.render('home/index', {
-  //   title: 'home page',
-  //   content: 'this is home page',
-  //   user: (ctx.session.user && ctx.session.user.name) || null
-  // });
+  await ctx.render('home/index', {
+    title: 'index page',
+    content: 'index page'
+  });
 };
 
 const about = async (ctx, next) => {
   await ctx.render('home/about', {
     title: 'about page',
-    content: 'this is about page'
+    content: 'about page'
   });
 };
 
