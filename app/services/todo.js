@@ -7,7 +7,7 @@ const getTodos = (user) => {
       .sort('updated_at')
       .exec().then((result) => {
         resolve(result);
-    });
+      });
   });
 };
 
@@ -20,7 +20,7 @@ const addTodo = (options) => {
 };
 
 const deleteTodo = (todoId) => {
-  
+
 };
 
 const completeTodo = (todoId) => {

@@ -1,4 +1,5 @@
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 const config = require('config-lite').mongodb;
 
 mongoose.connect(config.url, function (err) {
