@@ -16,9 +16,9 @@ const github = async (ctx, next) => {
   const result = await getGithubToke(code);
   try {
     const token = result.match(/^access_token=(\w+)&/)[1];
-    ctx.session.token = token;
     const userInfo = await getGithubUser(token);
     if (userInfo) {
+      ctx.session.token = token;
       ctx.session.user = JSON.parse(userInfo);
       return ctx.redirect('/todo');
     }
