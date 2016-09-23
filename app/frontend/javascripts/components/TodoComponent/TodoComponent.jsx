@@ -8,7 +8,7 @@ import Todo from './Todo';
 class TodoComponent extends React.Component {
   constructor(props) {
     super(props);
-    let {csrf} = props;
+    const {csrf} = props;
     this.state = {
       csrf,
       todos: [],
@@ -16,8 +16,10 @@ class TodoComponent extends React.Component {
         content: ''
       }
     };
+    this.handleTodoContentChange = this.handleTodoContentChange.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleTodoChange = this.handleTodoChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleTodoDelete = this.handleTodoDelete.bind(this);
   }
 
   componentDidMount() {
@@ -26,18 +28,63 @@ class TodoComponent extends React.Component {
     });
   }
 
-  handleTodoChange() {
-    let content = this.content.value;
-    let {todo} = this.state;
+  handleTodoContentChange() {
+    const content = this.content.value;
+    const {todo} = this.state;
     this.setState({
       todo: objectAssign({}, todo, {content})
     });
   }
 
-  handleSubmit() {
-    let {todo, todos} = this.state;
-    let content = {todo};
-    if (content) {
+  handleTodoChange(todo, index) {
+    const {csrf} = this.state;
+    $.ajax({
+      url: `/todo/${todo._id}`,
+      method: 'put',
+      data: {
+        todo,
+        '_csrf': csrf
+      },
+      success: (data) => {
+        if (data.success) {
+          const {todos} = this.state;
+          this.setState({
+            todos: [...todos.slice(0, index), todo, ...todos.slice(index + 1)]
+          });
+        }
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    });
+  }
+
+  handleTodoDelete(id) {
+    const {csrf} = this.state;
+    $.ajax({
+      url: `/todo/${id}`,
+      method: 'delete',
+      data: {
+        '_csrf': csrf
+      },
+      success: (data) => {
+        if (data.success) {
+          const {todos} = this.state;
+          this.setState({
+            todos: todos.filter(todo => todo._id !== id)
+          });
+        }
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
+  }
+
+  handleKeyDown(e) {
+    const {todo, todos} = this.state;
+    const content = {todo};
+    if (e.keyCode === 13 && content) {
       this.postNewTodo().then((newTodo) => {
         this.setState({
           todos: [...todos, newTodo],
@@ -63,12 +110,12 @@ class TodoComponent extends React.Component {
           reject(false);
         }
       });
-    })
+    });
   }
 
   postNewTodo() {
-    let {csrf, todo} = this.state;
-    let {content} = todo;
+    const {csrf, todo} = this.state;
+    const {content} = todo;
     return new Promise((resolve, reject) => {
       $.ajax({
         url: '/todo/new',
@@ -92,24 +139,29 @@ class TodoComponent extends React.Component {
   }
 
   render() {
-    let {todos, todo} = this.state;
-    let {content} = todo;
-    const todoComponent = todos.map((todo, index) => {
+    const {todos, todo} = this.state;
+    const {content} = todo;
+    const todoComponent = todos.map((t, i) => {
       return (
-        <Todo key={index} todo={todo}/>
+        <Todo
+          key={i}
+          todo={t}
+          index={i}
+          handleTodoChange={this.handleTodoChange}
+          handleTodoDelete={this.handleTodoDelete}
+        />
       )
     });
     return (
-      <div>
-        <div className="todo_creater">
-          <input
-            value={content}
-            ref={ref => this.content = ref}
-            placeholder="writer todo here"
-            onChange={this.handleTodoChange}
-          />
-          <div onClick={this.handleSubmit}>submit</div>
-        </div>
+      <div className="todos_container">
+        <input
+          value={content}
+          ref={ref => this.content = ref}
+          placeholder="writer todo here"
+          onChange={this.handleTodoContentChange}
+          onKeyDown={this.handleKeyDown}
+          className="todo_creater"
+        />
         {todoComponent}
       </div>
     )

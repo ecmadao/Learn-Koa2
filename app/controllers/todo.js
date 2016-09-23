@@ -43,11 +43,18 @@ const detailTodo = async (ctx, next) => {
 };
 
 const updateTodo = async (ctx, next) => {
-
+  const requestData = ctx.request.body;
+  const result = await Todo.updateTodo(requestData.todo);
+  ctx.body = {
+    success: result
+  };
 };
 
 const deleteTodo = async (ctx, next) => {
-
+  const result = await Todo.deleteTodo(ctx.params.id);
+  ctx.body = {
+    success: result
+  };
 };
 
 export default {

@@ -6,8 +6,9 @@
 
 {% block body %}
   <div class="user_home_wrapper">
+    <br/>
+    <br/>
     {% if user %}
-      <br/>
       <span>welcome, {{ user }}</span>
       <br/>
       <br/>
@@ -15,9 +16,7 @@
       see your <a href="/todo">Todo-List</a>&nbsp;or&nbsp;
       <a href="/user/logout">Logout</a>
     {% else %}
-      <img src="/images/gundamcat.png" class="github_login_image"/>
-      <br/>
-      <br/>
+      <i class="fa fa-github" aria-hidden="true"></i>&nbsp;
       <a href="https://github.com/login/oauth/authorize?scope=user:email&client_id=1b1d94a101d42c0f6dee" class="github_login_link">login with github</a>
     {% endif %}
   </div>

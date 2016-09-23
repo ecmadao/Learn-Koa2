@@ -10,7 +10,9 @@
   },
   "keywords": [
     "koa2",
-    "nodejs"
+    "nodejs",
+    "react",
+    "webpack"
   ],
   "author": "ecmadao",
   "license": "MIT",
