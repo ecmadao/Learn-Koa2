@@ -7,10 +7,13 @@
 {% block body %}
   <div class="user_home_wrapper">
     {% if user %}
+      <br/>
       <span>welcome, {{ user }}</span>
       <br/>
       <br/>
-      <a href="/user/logout">logout</a>
+      <br/>
+      see your <a href="/todo">Todo-List</a>&nbsp;or&nbsp;
+      <a href="/user/logout">Logout</a>
     {% else %}
       <img src="/images/gundamcat.png" class="github_login_image"/>
       <br/>

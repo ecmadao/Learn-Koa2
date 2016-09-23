@@ -1,23 +1,20 @@
 {% extends "layouts/base.html" %}
 
+{% block css %}
+  <script src="{{ assetsPath("todo.css") }}"></script>
+{% endblock %}
+
 {% block body %}
-  <h1>{{ content }}</h1>
+  <div id="todo_component">
+  </div>
   <form action="/todo/new" method="post">
     <input type="hidden" name="_csrf" value="{{ csrf }}" />
     <input type="hidden" name="utf8" value="✓" />
     <input type="text" name="content"/>
     <input type="submit" value="submit"/>
   </form>
-  <ul>
-    {% for todo in todos %}
-      <li data-id="{{ todo._id }}">
-        <input type="checkbox" defaultChecked="{{ todo.complete }}"/>
-        <span class="todo_content">
-          {{ todo.content }}
-        </span>
-        &nbsp;&nbsp;
-        <span>X</span>
-      </li>
-    {% endfor %}
-  </ul>
+{% endblock %}
+
+{% block js %}
+  <script src="{{ assetsPath("todo.js") }}"></script>
 {% endblock %}

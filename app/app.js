@@ -7,6 +7,7 @@ import onerror from 'koa-onerror';
 import views from 'koa-views';
 import csrf from 'koa-csrf';
 import flash from 'koa-flash';
+import json from 'koa-json';
 import session from 'koa-generic-session';
 import MongoStore from 'koa-generic-session-mongo';
 import nunjucks from 'nunjucks';
@@ -18,6 +19,18 @@ const app = new Koa();
 app.keys = [appKey];
 
 onerror(app);
+// bodyparser
+app.use(bodyParser());
+// json parse
+app.use(convert(json()));
+// logger
+app.use(convert(logger()));
+// session
+app.use(convert(session({
+  store: new MongoStore()
+})));
+// csrf
+app.use(new csrf());
 // helper func
 app.use(async (ctx, next) => {
   ctx.state = {
@@ -28,16 +41,6 @@ app.use(async (ctx, next) => {
 });
 // 配置nunjucks模板文件所在的路径，否则模板继承时无法使用相对路径
 nunjucks.configure(path.join(__dirname, './templates'), { autoescape: true });
-// bodyparser
-app.use(bodyParser());
-// logger
-app.use(convert(logger()));
-// session
-app.use(convert(session({
-  store: new MongoStore()
-})));
-// csrf
-app.use(new csrf());
 // flash
 app.use(convert(flash()));
 // frontend static file
