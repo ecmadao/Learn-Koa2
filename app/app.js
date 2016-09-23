@@ -13,7 +13,8 @@ import MongoStore from 'koa-generic-session-mongo';
 import nunjucks from 'nunjucks';
 import {appKey} from 'config-lite';
 import router from './routes/index';
-import {assetsPath} from './middlewares/helper';
+import {assetsPath} from './middlewares/assets_helper';
+import {catchError} from './middlewares/koa_middleware';
 
 const app = new Koa();
 app.keys = [appKey];
@@ -25,6 +26,8 @@ app.use(bodyParser());
 app.use(convert(json()));
 // logger
 app.use(convert(logger()));
+// catch error
+app.use(catchError)
 // session
 app.use(convert(session({
   store: new MongoStore()
@@ -53,6 +56,11 @@ app.use(views(path.join(__dirname, './templates'), {
 }));
 // router
 app.use(router.routes(), router.allowedMethods());
+// error
+app.on('error', function(err, ctx){
+  console.log(err);
+  logger.error('server error', err, ctx);
+});
 // helper
 app.listen(7000);
 

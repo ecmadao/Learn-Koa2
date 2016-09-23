@@ -4,7 +4,7 @@ const getTodos = (user) => {
   return new Promise((resolve, reject) => {
     Model.Todo
       .find({user: user})
-      .sort('updated_at')
+      .sort('-updated_at')
       .exec().then((result) => {
         resolve(result);
       });
