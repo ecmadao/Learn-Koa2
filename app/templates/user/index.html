@@ -1,13 +1,23 @@
 {% extends "layouts/base.html" %}
 
+{% block css %}
+  <link href="{{ assetsPath("user.css") }}" rel="stylesheet" type="text/css">
+{% endblock %}
+
 {% block body %}
-  <h1>{{ content }}</h1>
-  {% if user %}
-    <span>welcome, {{ user }}</span>
+  <div class="user_home_wrapper">
     <br/>
     <br/>
-    <a href="/user/logout">logout</a>
-  {% else %}
-    <a href="https://github.com/login/oauth/authorize?scope=user:email&client_id=1b1d94a101d42c0f6dee">login with github</a>
-  {% endif %}
+    {% if user %}
+      <span>welcome, {{ user }}</span>
+      <br/>
+      <br/>
+      <br/>
+      see your <a href="/todo">Todo-List</a>&nbsp;or&nbsp;
+      <a href="/user/logout">Logout</a>
+    {% else %}
+      <i class="fa fa-github" aria-hidden="true"></i>&nbsp;
+      <a href="https://github.com/login/oauth/authorize?scope=user:email&client_id=1b1d94a101d42c0f6dee" class="github_login_link">login with github</a>
+    {% endif %}
+  </div>
 {% endblock %}

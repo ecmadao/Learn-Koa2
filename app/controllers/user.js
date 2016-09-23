@@ -6,7 +6,6 @@ import {
 const userIndex = async (ctx, next) => {
   await ctx.render('user/index', {
     title: 'user home page',
-    content: 'this is user home page',
     user: (ctx.session.user && ctx.session.user.name) || null
   });
 };

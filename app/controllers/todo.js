@@ -1,14 +1,18 @@
 import Todo from '../services/todo';
 
 const todoIndex = async (ctx, next) => {
+  await ctx.render('todo/index', {
+    title: 'todos page'
+  });
+};
+
+const allTodos = async (ctx, next) => {
   const user = ctx.session.user;
   const todos = await Todo.getTodos(user.name);
-  await ctx.render('todo/index', {
-    todos: todos,
-    csrf: ctx.csrf,
-    title: 'todos page',
-    content: 'this is todo page'
-  });
+  ctx.body = {
+    data: todos,
+    success: true
+  };
 };
 
 const addNew = async (ctx, next) => {
@@ -20,7 +24,10 @@ const addNew = async (ctx, next) => {
     content: requestData.content
   }
   const newTodo = await Todo.addTodo(todo);
-  ctx.body = newTodo;
+  ctx.body = {
+    data: newTodo,
+    success: true
+  };
 };
 
 const complete = async (ctx, next) => {
@@ -36,17 +43,25 @@ const detailTodo = async (ctx, next) => {
 };
 
 const updateTodo = async (ctx, next) => {
-
+  const requestData = ctx.request.body;
+  const result = await Todo.updateTodo(requestData.todo);
+  ctx.body = {
+    success: result
+  };
 };
 
 const deleteTodo = async (ctx, next) => {
-
+  const result = await Todo.deleteTodo(ctx.params.id);
+  ctx.body = {
+    success: result
+  };
 };
 
 export default {
   todoIndex,
   delay,
   addNew,
+  allTodos,
   complete,
   detailTodo,
   updateTodo,
