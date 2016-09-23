@@ -9,7 +9,10 @@ const todoIndex = async (ctx, next) => {
 const allTodos = async (ctx, next) => {
   const user = ctx.session.user;
   const todos = await Todo.getTodos(user.name);
-  ctx.body = todos;
+  ctx.body = {
+    data: todos,
+    success: true
+  };
 };
 
 const addNew = async (ctx, next) => {
@@ -21,7 +24,10 @@ const addNew = async (ctx, next) => {
     content: requestData.content
   }
   const newTodo = await Todo.addTodo(todo);
-  ctx.body = newTodo;
+  ctx.body = {
+    data: newTodo,
+    success: true
+  };
 };
 
 const complete = async (ctx, next) => {
