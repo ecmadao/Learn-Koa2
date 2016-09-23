@@ -1,1 +1,1 @@
-alert('aaaaa');
+alert('1234567');

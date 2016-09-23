@@ -12,7 +12,7 @@ import MongoStore from 'koa-generic-session-mongo';
 import nunjucks from 'nunjucks';
 import {appKey} from 'config-lite';
 import router from './routes/index';
-import {assetsPath, assetCSSPath} from './middlewares/helper';
+import {assetsPath} from './middlewares/helper';
 
 const app = new Koa();
 app.keys = [appKey];
@@ -22,8 +22,7 @@ onerror(app);
 app.use(async (ctx, next) => {
   ctx.state = {
     csrf: ctx.csrf,
-    assetsPath,
-    assetCSSPath
+    assetsPath
   };
   await next();
 });
