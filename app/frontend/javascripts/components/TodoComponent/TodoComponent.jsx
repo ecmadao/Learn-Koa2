@@ -87,7 +87,7 @@ class TodoComponent extends React.Component {
     if (e.keyCode === 13 && content) {
       this.postNewTodo().then((newTodo) => {
         this.setState({
-          todos: [...todos, newTodo],
+          todos: [newTodo, ...todos],
           todo: objectAssign({}, todo, {content: ""})
         });
       });

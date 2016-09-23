@@ -58,24 +58,33 @@ class Todo extends React.Component {
       'important': important,
       'fa-circle-o': !important
     });
+    const todoContentClass = classNames('todo_content', {
+      'complete': complete
+    });
+    const todoContainerClass = classNames('todo_container', {
+      'complete': complete
+    });
+    const todoCompleteIcon = classNames('fa fa-check-square-o todo_complete', {
+      'complete': complete
+    });
     return (
-      <div className="todo_container">
+      <div className={todoContainerClass}>
         <i
           className={importantClass}
           aria-hidden="true"
           onClick={this.handleTodoImportantChange}></i>
         <input
           value={content}
-          className="todo_content"
+          className={todoContentClass}
           ref={ref => this.content = ref}
           onBlur={(e) => this.handleTodoChange(this.state)}
           onChange={this.handleTodoContentChange}
         />
         <div className="todo_operation">
           <i
-            className="fa fa-check-square-o todo_complete"
+            className={todoCompleteIcon}
             aria-hidden="true"
-            onClick={this.handleTodoCompleteChange}></i>&nbsp;&nbsp;&nbsp;
+            onClick={this.handleTodoCompleteChange}></i>&nbsp;
           <i
             className="fa fa-times todo_delete"
             aria-hidden="true"
