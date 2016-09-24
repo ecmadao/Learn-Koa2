@@ -39,10 +39,10 @@ class TodoComponent extends React.Component {
   handleTodoChange(todo, index) {
     const {csrf} = this.state;
     $.ajax({
-      url: `/todo/${todo._id}`,
+      url: `/todo/${todo.objectId}`,
       method: 'put',
       data: {
-        todo,
+        todo: JSON.stringify(todo),
         '_csrf': csrf
       },
       success: (data) => {
@@ -71,7 +71,7 @@ class TodoComponent extends React.Component {
         if (data.success) {
           const {todos} = this.state;
           this.setState({
-            todos: todos.filter(todo => todo._id !== id)
+            todos: todos.filter(todo => todo.objectId !== id)
           });
         }
       },

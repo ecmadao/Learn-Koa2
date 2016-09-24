@@ -8,8 +8,7 @@ import views from 'koa-views';
 import csrf from 'koa-csrf';
 import flash from 'koa-flash';
 import json from 'koa-json';
-import session from 'koa-generic-session';
-import MongoStore from 'koa-generic-session-mongo';
+import session from 'koa-session';
 import nunjucks from 'nunjucks';
 import config from 'config';
 import router from './routes/index';
@@ -30,9 +29,13 @@ app.use(convert(logger()));
 // catch error
 app.use(catchError)
 // session
-app.use(convert(session({
-  store: new MongoStore()
-})));
+app.use(convert(session(app)));
+// or you can use MongoStore as session,
+// but you must connect mongo server first
+// app.use(convert(session({
+//   store: new MongoStore()
+// })));
+
 // csrf
 app.use(new csrf());
 // helper func

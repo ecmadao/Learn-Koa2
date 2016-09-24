@@ -7,8 +7,6 @@ if (production) {
   Todo = require('../services/todo_mongo');
 }
 
-console.log(typeof Todo);
-
 const todoIndex = async (ctx, next) => {
   await ctx.render('todo/index', {
     title: 'todos page'
@@ -18,6 +16,7 @@ const todoIndex = async (ctx, next) => {
 const allTodos = async (ctx, next) => {
   const user = ctx.session.user;
   const todos = await Todo.getTodos(user.name);
+  console.log(todos);
   ctx.body = {
     data: todos,
     success: true
@@ -30,7 +29,7 @@ const addNew = async (ctx, next) => {
   const todo = {
     user,
     content: requestData.content
-  }
+  };
   const newTodo = await Todo.addTodo(todo);
   ctx.body = {
     data: newTodo,
@@ -52,7 +51,7 @@ const detailTodo = async (ctx, next) => {
 
 const updateTodo = async (ctx, next) => {
   const requestData = ctx.request.body;
-  const result = await Todo.updateTodo(requestData.todo);
+  const result = await Todo.updateTodo(JSON.parse(requestData.todo));
   ctx.body = {
     success: result
   };

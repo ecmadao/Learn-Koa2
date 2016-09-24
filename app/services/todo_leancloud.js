@@ -3,13 +3,13 @@ import config from 'config';
 
 const appId = config.get('leancloud.appId');
 const appKey = config.get('leancloud.appKey');
-console.log('appId');
-console.log(appId);
+const appDB = config.get('leancloud.appDB');
+
 AV.init({ appId, appKey });
 
 class LeancloudStorage {
   constructor() {
-    const TodoObject = AV.Object.extend('Todo');
+    const TodoObject = AV.Object.extend(appDB);
     this.todoObject = new TodoObject();
   }
 
@@ -26,7 +26,7 @@ class LeancloudStorage {
 
   getTodos(user) {
     return new Promise((resolve, reject) => {
-      const query = new AV.Query('Todo');
+      const query = new AV.Query(appDB);
       query.equalTo('user', user);
       query.find().then((results) => {
         resolve(results);
@@ -37,7 +37,15 @@ class LeancloudStorage {
   }
 
   async updateTodo(todo) {
-    return await todo;
+    const targetTodo = AV.Object.createWithoutData(appDB, todo.objectId);
+    Object.keys(todo).forEach((todoKey) => {
+      console.log('key', todoKey)
+      console.log('value', todo[todoKey])
+      console.log('type', typeof todo[todoKey])
+      targetTodo.set(todoKey, todo[todoKey]);
+    });
+    await targetTodo.save();
+    return true;
   }
 
   async deleteTodo(todoId) {
