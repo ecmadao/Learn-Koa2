@@ -28,6 +28,7 @@ class LeancloudStorage {
     return new Promise((resolve, reject) => {
       const query = new AV.Query(appDB);
       query.equalTo('user', user);
+      query.descending('createdAt');
       query.find().then((results) => {
         resolve(results);
       }).then((err) => {
