@@ -7,7 +7,10 @@
     "production": "export NODE_ENV=production && npm run start",
     "start": "./node_modules/.bin/nodemon index.js",
     "watch_dev": "./node_modules/webpack/bin/webpack.js --config config/webpack/webpack.dev.js -p --watch",
-    "build_pro": "./node_modules/webpack/bin/webpack.js --config config/webpack/webpack.production.js -p"
+    "build_dev": "./node_modules/webpack/bin/webpack.js --config config/webpack/webpack.dev.js -p",
+    "build_pro": "./node_modules/webpack/bin/webpack.js --config config/webpack/webpack.production.js -p",
+    "rock": "npm run build_pro && npm run production",
+    "rock_dev": "npm run build_dev && npm run start"
   },
   "keywords": [
     "koa2",

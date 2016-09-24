@@ -55,8 +55,7 @@
     outline: none;
     height: 40px;
     line-height: 40px;
-    width: 100%;
-    padding-right: 60px;
+    width: 80%;
     padding-left: 10px;
     background-color: transparent;
 
@@ -80,9 +79,12 @@
   }
 
   & .todo_complete {
-    &:hover,
-    &.complete {
+    &:hover {
       color: #27ae60;
+    }
+
+    &.complete {
+      color: #C8C8C8;
     }
   }
 

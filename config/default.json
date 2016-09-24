@@ -9,6 +9,10 @@
     "clientSecret": "",
     "appName": "Koa2-Todo"
   },
-  "leancloud": {},
+  "leancloud": {
+    "appId": "",
+    "appKey": "",
+    "appDB": ""
+  },
   "appKey": "wqefsdvrfbtyeeqwsddcrfewgrew54g54gg45242fdsfgvbrtsh5452q41tffsaaasd3223rdq"
 }
