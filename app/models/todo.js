@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
-const Schema = mongoose.Schema;
 
+const Schema = mongoose.Schema;
 const TodoSchema = new Schema({
   content: { type: String, required: true },
   complete: { type: Boolean, required: true, default: false },
@@ -13,5 +13,4 @@ const TodoSchema = new Schema({
 });
 
 TodoSchema.index({content: 1});
-
 export default mongoose.model('Todo', TodoSchema);

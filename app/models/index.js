@@ -1,10 +1,11 @@
-// const mongoose = require('mongoose');
 import mongoose from 'mongoose';
-const config = require('config-lite').mongodb;
+import config from 'config';
 
-mongoose.connect(config.url, function (err) {
+const mongodbUrl = config.get('mongodb.url');
+
+mongoose.connect(mongodbUrl, function (err) {
   if (err) {
-    console.error('connect to %s error: ', config.url, err.message);
+    console.error('connect to %s error: ', mongodbUrl, err.message);
     process.exit(1);
   }
 });

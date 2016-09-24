@@ -4,9 +4,10 @@
   "description": "learn koa2",
   "main": "index.js",
   "scripts": {
+    "production": "export NODE_ENV=production && npm run start",
     "start": "./node_modules/.bin/nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build_dev": "webpack --config config/webpack/webpack.dev.js -p --watch"
+    "build_dev": "./node_modules/webpack/bin/webpack.js --config config/webpack/webpack.dev.js -p --watch"
   },
   "keywords": [
     "koa2",
@@ -20,7 +21,7 @@
     "babel-plugin-transform-async-to-generator": "^6.8.0",
     "babel-register": "^6.14.0",
     "classnames": "^2.2.5",
-    "config-lite": "^1.5.0",
+    "config": "^1.21.0",
     "koa": "^2.0.0-alpha.7",
     "koa-bodyparser": "^3.2.0",
     "koa-convert": "^1.2.0",
@@ -34,6 +35,7 @@
     "koa-router": "^7.0.1",
     "koa-static": "^2.0.0",
     "koa-views": "^5.1.2",
+    "leancloud-storage": "^1.5.0",
     "mongoose": "^4.6.0",
     "nodemon": "^1.10.2",
     "nprogress": "^0.2.0",

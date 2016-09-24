@@ -11,11 +11,12 @@ import json from 'koa-json';
 import session from 'koa-generic-session';
 import MongoStore from 'koa-generic-session-mongo';
 import nunjucks from 'nunjucks';
-import {appKey} from 'config-lite';
+import config from 'config';
 import router from './routes/index';
 import {assetsPath} from './middlewares/assets_helper';
 import {catchError} from './middlewares/koa_middleware';
 
+const appKey = config.get('appKey');
 const app = new Koa();
 app.keys = [appKey];
 

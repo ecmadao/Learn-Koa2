@@ -1,0 +1,14 @@
+{
+  "production": false,
+  "port": "7000",
+  "mongodb": {
+    "url": "mongodb://127.0.0.1:27017/koa2-todo"
+  },
+  "githubConfig": {
+    "clientId": "",
+    "clientSecret": "",
+    "appName": "Koa2-Todo"
+  },
+  "leancloud": {},
+  "appKey": "wqefsdvrfbtyeeqwsddcrfewgrew54g54gg45242fdsfgvbrtsh5452q41tffsaaasd3223rdq"
+}
