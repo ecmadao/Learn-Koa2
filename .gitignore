@@ -3,3 +3,4 @@
 /public/assets
 /*.log
 /.idea
+/config/production.json

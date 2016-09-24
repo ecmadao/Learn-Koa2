@@ -16,17 +16,17 @@ class Todo extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const {_id} = this.state;
+    const {objectId} = this.state;
     const {todo} = nextProps;
-    if (_id !== todo._id) {
+    if (objectId !== todo.objectId) {
       this.setState({...todo});
     }
   }
 
   handleTodoDelete() {
-    const {_id} = this.state;
+    const {objectId} = this.state;
     const {handleTodoDelete} = this.props;
-    handleTodoDelete && handleTodoDelete(_id);
+    handleTodoDelete && handleTodoDelete(objectId);
   }
 
   handleTodoCompleteChange() {
