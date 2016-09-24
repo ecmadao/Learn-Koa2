@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import classNames from 'classnames';
+import {handleAsyncFunc} from '../../utils/util';
 import objectAssign from 'object-assign';
 import {polyfill} from 'es6-promise';
 polyfill();
@@ -20,6 +20,7 @@ class TodoComponent extends React.Component {
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleTodoChange = this.handleTodoChange.bind(this);
     this.handleTodoDelete = this.handleTodoDelete.bind(this);
+    this.handleNewTodoAdd = this.handleNewTodoAdd.bind(this);
   }
 
   componentDidMount() {
@@ -37,55 +38,69 @@ class TodoComponent extends React.Component {
   }
 
   handleTodoChange(todo, index) {
-    const {csrf} = this.state;
-    $.ajax({
-      url: `/todo/${todo.objectId}`,
-      method: 'put',
-      data: {
-        todo: JSON.stringify(todo),
-        '_csrf': csrf
-      },
-      success: (data) => {
-        if (data.success) {
-          const {todos} = this.state;
-          this.setState({
-            todos: [...todos.slice(0, index), todo, ...todos.slice(index + 1)]
-          });
+    handleAsyncFunc(this.putTodoChange.bind(this), todo, index);
+  }
+
+  putTodoChange(todo, index) {
+    return new Promise((resolve, reject) => {
+      const {csrf} = this.state;
+      $.ajax({
+        url: `/todo/${todo.objectId}`,
+        method: 'put',
+        data: {
+          todo: JSON.stringify(todo),
+          '_csrf': csrf
+        },
+        success: (data) => {
+          if (data.success) {
+            const {todos} = this.state;
+            this.setState({
+              todos: [...todos.slice(0, index), todo, ...todos.slice(index + 1)]
+            });
+          }
+          resolve(true);
+        },
+        error: (err) => {
+          console.log(err);
+          reject(false);
         }
-      },
-      error: (err) => {
-        console.log(err);
-      }
+      });
     });
   }
 
   handleTodoDelete(id) {
-    const {csrf} = this.state;
-    $.ajax({
-      url: `/todo/${id}`,
-      method: 'delete',
-      data: {
-        '_csrf': csrf
-      },
-      success: (data) => {
-        if (data.success) {
-          const {todos} = this.state;
-          this.setState({
-            todos: todos.filter(todo => todo.objectId !== id)
-          });
+    handleAsyncFunc(this.deleteTodo.bind(this), id);
+  }
+
+  deleteTodo(id) {
+    return new Promise((resolve, reject) => {
+      const {csrf} = this.state;
+      $.ajax({
+        url: `/todo/${id}`,
+        method: 'delete',
+        data: { '_csrf': csrf },
+        success: (data) => {
+          if (data.success) {
+            const {todos} = this.state;
+            this.setState({
+              todos: todos.filter(todo => todo.objectId !== id)
+            });
+          }
+          resolve(true);
+        },
+        error: (err) => {
+          console.log(err);
+          reject(false);
         }
-      },
-      error: (err) => {
-        console.log(err);
-      }
-    })
+      });
+    });
   }
 
   handleKeyDown(e) {
     const {todo, todos} = this.state;
     const content = {todo};
     if (e.keyCode === 13 && content) {
-      this.postNewTodo().then((newTodo) => {
+      this.handleNewTodoAdd().then((newTodo) => {
         this.setState({
           todos: [newTodo, ...todos],
           todo: objectAssign({}, todo, {content: ""})
@@ -111,6 +126,10 @@ class TodoComponent extends React.Component {
         }
       });
     });
+  }
+
+  handleNewTodoAdd() {
+    return handleAsyncFunc(this.postNewTodo.bind(this));
   }
 
   postNewTodo() {

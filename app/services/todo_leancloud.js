@@ -49,7 +49,14 @@ class LeancloudStorage {
   }
 
   async deleteTodo(todoId) {
-    return await todoId;
+    return new Promise((resolve, reject) => {
+      const todo = AV.Object.createWithoutData(appDB, todoId);
+      todo.destroy().then(() => {
+        resolve(true);
+      }).catch((err) => {
+        resolve(false);
+      });
+    });
   }
 }
 
