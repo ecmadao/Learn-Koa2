@@ -6,7 +6,7 @@ const PATH = require("./build_path");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const postcssImport = require("postcss-import");
 const cssnext = require("postcss-cssnext");
-const postcssReporter = require("postcss-reporter");
+
 const ManifestPlugin = require('webpack-manifest-plugin');
 const CleanPlugin = require('clean-webpack-plugin');
 
@@ -30,13 +30,12 @@ module.exports = {
     filename: "[name].bundle.js",
   },
   resolve: {
-    extensions: ["", ".js", ".jsx"]
+    extensions: ["", ".js", ".jsx", "css"]
   },
   module: {
     loaders: [
       {test: require.resolve("jquery"), loader: "expose?jQuery"},
       {test: require.resolve("jquery"), loader: "expose?$"},
-      // {test: /\.less$/, loader: ExtractTextPlugin.extract("style", "css!less")},
       {test: /\.css$/, loader: ExtractTextPlugin.extract("style", "css!postcss")},
       {
         test: /\.jsx?$/,
@@ -54,11 +53,8 @@ module.exports = {
   },
   postcss: function() {
     return [
-      postcssImport({
-        addDependencyTo: webpack
-      }),
-      cssnext({autoprefixer: {browsers: "ie >= 9, ..."}}),
-      postcssReporter({clearMessages: true})
+      postcssImport({addDependencyTo: webpack}),
+      cssnext({autoprefixer: {browsers: "ie >= 9, ..."}})
     ];
   },
   plugins: [

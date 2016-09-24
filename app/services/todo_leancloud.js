@@ -40,9 +40,6 @@ class LeancloudStorage {
   async updateTodo(todo) {
     const targetTodo = AV.Object.createWithoutData(appDB, todo.objectId);
     Object.keys(todo).forEach((todoKey) => {
-      console.log('key', todoKey)
-      console.log('value', todo[todoKey])
-      console.log('type', typeof todo[todoKey])
       targetTodo.set(todoKey, todo[todoKey]);
     });
     await targetTodo.save();

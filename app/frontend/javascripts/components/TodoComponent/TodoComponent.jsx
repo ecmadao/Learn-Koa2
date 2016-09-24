@@ -4,6 +4,7 @@ import objectAssign from 'object-assign';
 import {polyfill} from 'es6-promise';
 polyfill();
 import Todo from './Todo';
+import LoadingModal from '../LoadingModal/index';
 
 class TodoComponent extends React.Component {
   constructor(props) {
@@ -14,7 +15,8 @@ class TodoComponent extends React.Component {
       todos: [],
       todo: {
         content: ''
-      }
+      },
+      loading: false
     };
     this.handleTodoContentChange = this.handleTodoContentChange.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
@@ -100,10 +102,12 @@ class TodoComponent extends React.Component {
     const {todo, todos} = this.state;
     const content = {todo};
     if (e.keyCode === 13 && content) {
+      this.setState({loading: true});
       this.handleNewTodoAdd().then((newTodo) => {
         this.setState({
           todos: [newTodo, ...todos],
-          todo: objectAssign({}, todo, {content: ""})
+          todo: objectAssign({}, todo, {content: ""}),
+          loading: false
         });
       });
     }
@@ -158,7 +162,7 @@ class TodoComponent extends React.Component {
   }
 
   render() {
-    const {todos, todo} = this.state;
+    const {todos, todo, loading} = this.state;
     const {content} = todo;
     const todoComponent = todos.map((t, i) => {
       return (
@@ -173,6 +177,7 @@ class TodoComponent extends React.Component {
     });
     return (
       <div className="todos_container">
+        <LoadingModal showModal={loading} />
         <input
           value={content}
           ref={ref => this.content = ref}

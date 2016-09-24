@@ -16,7 +16,6 @@ const todoIndex = async (ctx, next) => {
 const allTodos = async (ctx, next) => {
   const user = ctx.session.user;
   const todos = await Todo.getTodos(user.name);
-  console.log(todos);
   ctx.body = {
     data: todos,
     success: true
