@@ -16,7 +16,7 @@ class TodoComponent extends React.Component {
       todo: {
         content: ''
       },
-      loading: false
+      loading: true
     };
     this.handleTodoContentChange = this.handleTodoContentChange.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
@@ -27,7 +27,10 @@ class TodoComponent extends React.Component {
 
   componentDidMount() {
     this.fetchTodos().then((todos) => {
-      this.setState({ todos });
+      this.setState({
+        todos,
+        loading: false
+      });
     });
   }
 
