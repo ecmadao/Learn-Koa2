@@ -3,10 +3,9 @@ const path = require("path");
 const fs = require('fs');
 const PATH = require("./build_path");
 
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const postcssImport = require("postcss-import");
 const cssnext = require("postcss-cssnext");
-
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const ManifestPlugin = require('webpack-manifest-plugin');
 const CleanPlugin = require('clean-webpack-plugin');
 
@@ -58,20 +57,11 @@ module.exports = {
     ];
   },
   plugins: [
-    new ExtractTextPlugin("[name].bundle.css", {
-      allChunks: true
-    }),
     new webpack.ProvidePlugin({
       $: "jquery",
       jQuery: "jquery",
       "window.jQuery": "jquery"
     }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: "common",
-      minChunks: Infinity
-    }),
-    new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.optimize.DedupePlugin(),
     new ManifestPlugin({
       fileName: 'webpack_manifest.json'
     }),
