@@ -65,7 +65,6 @@ app.on('error', function(err, ctx){
   console.log(err);
   logger.error('server error', err, ctx);
 });
-// helper
-app.listen(7000);
+app.listen(process.env.PORT || 7000);
 
 export default app;
