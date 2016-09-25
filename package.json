@@ -14,7 +14,9 @@
     "build_dev": "./node_modules/webpack/bin/webpack.js --config config/webpack/webpack.dev.js -p",
     "build_pro": "./node_modules/webpack/bin/webpack.js --config config/webpack/webpack.production.js -p",
     "rock": "npm run build_pro && npm run production",
-    "rock_dev": "npm run build_dev && npm run start_app"
+    "rock_dev": "npm run build_dev && npm run start_app",
+    "add_assets": "npm run build_pro && git add public/assets -f && git commit -m 'assets'",
+    "deploy": "npm run add_assets && git push heroku"
   },
   "keywords": [
     "koa2",
