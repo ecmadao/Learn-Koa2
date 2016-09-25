@@ -17,7 +17,6 @@ const allTodos = async (ctx, next) => {
   const user = ctx.session.user;
   let query = {};
   const requestQuery = ctx.request.query;
-  console.log(requestQuery);
   if (requestQuery && requestQuery.complete && requestQuery.complete === 'true') {
     query['complete'] = true;
   }
