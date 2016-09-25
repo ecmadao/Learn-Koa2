@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {handleAsyncFunc} from '../../utils/util';
 import objectAssign from 'object-assign';
+import classNames from 'classnames';
 import {polyfill} from 'es6-promise';
 polyfill();
 import Todo from './Todo';
@@ -16,17 +17,26 @@ class TodoComponent extends React.Component {
       todo: {
         content: ''
       },
-      loading: true
+      loading: true,
+      query: {
+        complete: false,
+        important: false
+      }
     };
     this.handleTodoContentChange = this.handleTodoContentChange.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleTodoChange = this.handleTodoChange.bind(this);
     this.handleTodoDelete = this.handleTodoDelete.bind(this);
     this.handleNewTodoAdd = this.handleNewTodoAdd.bind(this);
+    this.handleTodoQueryChange = this.handleTodoQueryChange.bind(this);
   }
 
   componentDidMount() {
-    this.fetchTodos().then((todos) => {
+    this.initialTodos();
+  }
+
+  initialTodos(query = this.state.query) {
+    this.fetchTodos(query).then((todos) => {
       this.setState({
         todos,
         loading: false
@@ -116,10 +126,14 @@ class TodoComponent extends React.Component {
     }
   }
 
-  fetchTodos() {
+  fetchTodos(query) {
+    let url = '/todo/all?';
+    Object.keys(query).forEach((key) => {
+      url =`${url}${key}=${query[key]}&`;
+    });
     return new Promise((resolve, reject) => {
       $.ajax({
-        url: '/todo/all',
+        url: url,
         method: 'GET',
         success: (data) => {
           if (data.success) {
@@ -164,9 +178,22 @@ class TodoComponent extends React.Component {
     });
   }
 
+  handleTodoQueryChange(queryKey) {
+    let newQueryObj = {};
+    const {query} = this.state;
+    newQueryObj[queryKey] = !query[queryKey];
+    const newQuery = objectAssign({}, query, newQueryObj);
+    this.setState({
+      query: newQuery,
+      loading: true
+    });
+    this.initialTodos(newQuery);
+  }
+
   render() {
-    const {todos, todo, loading} = this.state;
+    const {todos, todo, loading, query} = this.state;
     const {content} = todo;
+    const {complete, important} = query;
     const todoComponent = todos.map((t, i) => {
       return (
         <Todo
@@ -178,6 +205,15 @@ class TodoComponent extends React.Component {
         />
       )
     });
+    const importantClass = classNames('fa query_important', {
+      'fa-circle': important,
+      'important': important,
+      'fa-circle-o': !important
+    });
+    const todoCompleteIcon = classNames('fa fa-check-square-o query_complete', {
+      'complete': complete
+    });
+
     return (
       <div className="todos_container">
         <LoadingModal showModal={loading} />
@@ -189,6 +225,26 @@ class TodoComponent extends React.Component {
           onKeyDown={this.handleKeyDown}
           className="todo_creater"
         />
+        <div className="todo_query">
+          筛选：
+          <i
+            className={importantClass}
+            aria-hidden="true"
+            onClick={() => {
+              this.handleTodoQueryChange('important');
+            }}></i>
+          &nbsp;
+          <i
+            className={todoCompleteIcon}
+            aria-hidden="true"
+            onClick={() => {
+              this.handleTodoQueryChange('complete');
+            }}></i>
+          &nbsp;
+          <div className="todos_count">
+            <i className="fa fa-paper-plane-o" aria-hidden="true"></i>&nbsp;{todos.length}
+          </div>
+        </div>
         {todoComponent}
       </div>
     )

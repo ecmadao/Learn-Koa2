@@ -24,10 +24,13 @@ class LeancloudStorage {
     return await this.todoObject.save(todo);
   }
 
-  getTodos(user) {
+  getTodos(user, options) {
     return new Promise((resolve, reject) => {
       const query = new AV.Query(appDB);
       query.equalTo('user', user);
+      Object.keys(options).forEach((key) => {
+        query.equalTo(key, options[key]);
+      });
       query.descending('createdAt');
       query.find().then((results) => {
         resolve(results);

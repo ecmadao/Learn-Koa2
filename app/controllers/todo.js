@@ -1,7 +1,7 @@
 import config from 'config';
 const production = config.get('production');
 let Todo;
-if (production) {
+if (process.env.NODE_ENV === "production") {
   Todo = require('../services/todo_leancloud');
 } else {
   Todo = require('../services/todo_mongo');
@@ -15,7 +15,15 @@ const todoIndex = async (ctx, next) => {
 
 const allTodos = async (ctx, next) => {
   const user = ctx.session.user;
-  const todos = await Todo.getTodos(user.name);
+  let query = {};
+  const requestQuery = ctx.request.query;
+  if (requestQuery && requestQuery.complete && requestQuery.complete === 'true') {
+    query['complete'] = true;
+  }
+  if (requestQuery && requestQuery.important && requestQuery.important === 'true') {
+    query['important'] = true;
+  }
+  const todos = await Todo.getTodos(user.name, query);
   ctx.body = {
     data: todos,
     success: true
@@ -34,14 +42,6 @@ const addNew = async (ctx, next) => {
     data: newTodo,
     success: true
   };
-};
-
-const complete = async (ctx, next) => {
-
-};
-
-const delay = async (ctx, next) => {
-
 };
 
 const detailTodo = async (ctx, next) => {
@@ -65,10 +65,8 @@ const deleteTodo = async (ctx, next) => {
 
 export default {
   todoIndex,
-  delay,
   addNew,
   allTodos,
-  complete,
   detailTodo,
   updateTodo,
   deleteTodo
