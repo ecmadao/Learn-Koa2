@@ -10,7 +10,29 @@
     box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.12), 0 0 4px 0 rgba(0, 0, 0, 0.08);
     border-radius: 2px;
     width: 400px;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
+  }
+
+  & .todo_query {
+    margin-bottom: 10px;
+    position: relative;
+
+    & .todos_count {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      transform: translateY(-50%);
+    }
+
+    i {
+      cursor: pointer;
+    }
+    & .query_important.important {
+      color: #2980b9;
+    }
+    & .query_complete.complete {
+      color: #ACACAC;
+    }
   }
 
   & .todo_container {
@@ -84,7 +106,7 @@
     }
 
     &.complete {
-      color: #C8C8C8;
+      color: #ACACAC;
     }
   }
 
