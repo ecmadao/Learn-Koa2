@@ -1,9 +1,13 @@
 import Model from '../models/index';
 
-const getTodos = (user) => {
+const getTodos = (user, options) => {
+  let query = {user: user}
+  Object.keys(options).forEach((key) => {
+    query[key] = options[key];
+  });
   return new Promise((resolve, reject) => {
     Model.Todo
-      .find({user: user})
+      .find(query)
       .sort('-updated_at')
       .exec().then((result) => {
         resolve(result);
@@ -37,7 +41,7 @@ const updateTodo = (todo) => {
   });
 };
 
-export default {
+module.exports = {
   getTodos,
   addTodo,
   deleteTodo,

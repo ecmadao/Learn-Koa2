@@ -48,7 +48,9 @@ class Todo extends React.Component {
 
   handleTodoChange(todo) {
     const {handleTodoChange, index} = this.props;
-    handleTodoChange && handleTodoChange(todo, index);
+    if (todo.content !== this.props.todo.content) {
+      handleTodoChange && handleTodoChange(todo, index);
+    }
   }
 
   render() {

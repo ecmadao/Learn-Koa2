@@ -37,6 +37,11 @@ class TodoComponent extends React.Component {
 
   initialTodos(query = this.state.query) {
     this.fetchTodos(query).then((todos) => {
+      todos.forEach((todo) => {
+        const id = todo.objectId || todo._id;
+        todo.objectId = id;
+        todo._id = id;
+      });
       this.setState({
         todos,
         loading: false
