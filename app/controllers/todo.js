@@ -23,7 +23,7 @@ const allTodos = async (ctx, next) => {
   if (requestQuery && requestQuery.important && requestQuery.important === 'true') {
     query['important'] = true;
   }
-  const todos = await Todo.getTodos(user.name, query);
+  const todos = await Todo.getTodos(user.login, query);
   ctx.body = {
     data: todos,
     success: true
@@ -32,7 +32,7 @@ const allTodos = async (ctx, next) => {
 
 const addNew = async (ctx, next) => {
   const requestData = ctx.request.body;
-  const user = ctx.session.user.name;
+  const user = ctx.session.user.login;
   const todo = {
     user,
     content: requestData.content
